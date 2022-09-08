@@ -2,7 +2,7 @@ import request from "supertest";
 import { app } from "../../app";
 import { getAuthCookie } from "../../test/auth-helper";
 
-it("response with current user details when authenticated", async () => {
+it("responds with current user details when authenticated", async () => {
   const cookie = await getAuthCookie();
   const response = await request(app)
     .get("/api/users/currentuser")
@@ -12,7 +12,7 @@ it("response with current user details when authenticated", async () => {
 
   expect(response.body.currentUser.email).toEqual("test@test.com");
 });
-it("response with null when not authenticated", async () => {
+it("responds with null when not authenticated", async () => {
   const response = await request(app)
     .get("/api/users/currentuser")
     .send({})
