@@ -1,13 +1,9 @@
 import request from "supertest";
 import { app } from "../../app";
+import { getAuthCookie } from "../../test/auth-helper";
 
 it("response with current user details when authenticated", async () => {
-  const singupResponse = await request(app)
-    .post("/api/users/signup")
-    .send({ email: "test@test.com", password: "password" })
-    .expect(201);
-
-  const cookie = singupResponse.get("Set-Cookie");
+  const cookie = await getAuthCookie();
   const response = await request(app)
     .get("/api/users/currentuser")
     .set("Cookie", cookie)
