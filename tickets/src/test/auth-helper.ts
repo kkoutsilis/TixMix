@@ -1,7 +1,10 @@
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 export const getAuthCookie = async () => {
-  const payload = { id: "a131sdfs3e", email: "test@test.com" };
+  const id = new mongoose.Types.ObjectId().toHexString();
+  const email = "test@test.com";
+  const payload = { id, email };
   const token = jwt.sign(payload, process.env.JWT_KEY!);
   const session = { jwt: token };
   const sessionJSON = JSON.stringify(session);
