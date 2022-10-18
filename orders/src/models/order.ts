@@ -50,11 +50,10 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
-const Order = mongoose.model<OrderDoc, OrderModel>("Order", orderSchema);
-
 // use that so typescript can be aware of order attr types
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);
 };
+const Order = mongoose.model<OrderDoc, OrderModel>("Order", orderSchema);
 
-export { Order };
+export { Order, OrderStatus };
