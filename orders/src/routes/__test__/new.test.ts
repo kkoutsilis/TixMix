@@ -77,3 +77,5 @@ it("reserves a ticket", async () => {
   expect(orders[0].status).toEqual(OrderStatus.Created);
   expect(orders[0].userId);
 });
+
+it.todo("emits an order created event");
