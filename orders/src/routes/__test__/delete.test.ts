@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { Ticket } from "../../models/ticket";
 import { getAuthCookie } from "../../test/auth-helper";
 import { Order, OrderStatus } from "../../models/order";
+import { natsWrapper } from "../../nats-wrapper";
 
 it("returns an error when invalid id provided", async () => {
   const id = new mongoose.Types.ObjectId();
@@ -51,4 +52,22 @@ it("returns an canceled oreder with 204", async () => {
   expect(cancelledOrder!.status).toEqual(OrderStatus.Cancelled);
 });
 
-it.todo("emits an order cancelled event");
+it("emits an order cancelled event", async () => {
+  const ticket = Ticket.build({ title: "test", price: 20 });
+  await ticket.save();
+
+  const cookie = await getAuthCookie();
+
+  const { body: order } = await request(app)
+    .post("/api/orders")
+    .set("Cookie", cookie)
+    .send({ ticketId: ticket.id })
+    .expect(201);
+
+  await request(app)
+    .delete(`/api/orders/${order.id}`)
+    .set("Cookie", cookie)
+    .expect(204);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+});

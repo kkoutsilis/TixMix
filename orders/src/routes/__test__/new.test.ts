@@ -4,6 +4,7 @@ import { getAuthCookie } from "../../test/auth-helper";
 import mongoose from "mongoose";
 import { Order, OrderStatus } from "../../models/order";
 import { Ticket } from "../../models/ticket";
+import { natsWrapper } from "../../nats-wrapper";
 
 it("has a route handler listening to /api/orders for POST req ", async () => {
   const response = await request(app).post("/api/orders").send({});
@@ -78,4 +79,18 @@ it("reserves a ticket", async () => {
   expect(orders[0].userId);
 });
 
-it.todo("emits an order created event");
+it("emits an order created event", async () => {
+  const ticket = Ticket.build({
+    title: "test",
+    price: 20,
+  });
+  await ticket.save();
+
+  await request(app)
+    .post("/api/orders")
+    .set("Cookie", await getAuthCookie())
+    .send({ ticketId: ticket.id })
+    .expect(201);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
