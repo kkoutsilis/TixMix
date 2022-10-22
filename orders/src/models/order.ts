@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { TicketDoc } from "./ticket";
 import { OrderStatus } from "@ktixmix/common";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 interface OrderAttrs {
   userId: string;
@@ -13,6 +14,7 @@ interface OrderDoc extends mongoose.Document {
   userId: string;
   status: OrderStatus;
   expiresAt: Date;
+  version: number;
   ticket: TicketDoc;
 }
 
@@ -49,6 +51,8 @@ const orderSchema = new mongoose.Schema(
     },
   }
 );
+orderSchema.set("versionKey", "version");
+orderSchema.plugin(updateIfCurrentPlugin);
 
 // use that so typescript can be aware of order attr types
 orderSchema.statics.build = (attrs: OrderAttrs) => {
