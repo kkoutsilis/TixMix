@@ -14,7 +14,11 @@ it("returns an error when invalid id provided", async () => {
 });
 
 it("returns an error when user does not own the order", async () => {
-  const ticket = Ticket.build({ title: "test", price: 20 });
+  const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    title: "test",
+    price: 20,
+  });
   await ticket.save();
 
   const { body: order } = await request(app)
@@ -29,7 +33,11 @@ it("returns an error when user does not own the order", async () => {
     .expect(401);
 });
 it("returns requested order", async () => {
-  const ticket = Ticket.build({ title: "test", price: 20 });
+  const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    title: "test",
+    price: 20,
+  });
   await ticket.save();
 
   const cookie = await getAuthCookie();
