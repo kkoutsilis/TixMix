@@ -54,7 +54,6 @@ it("returns 400 when purchasing a cancelled order", async () => {
     .post("/api/payments")
     .set("Cookie", await getAuthCookie(userId))
     .send({
-      token: "sometoken",
       orderId: order.id,
     })
     .expect(400);
@@ -73,7 +72,7 @@ it("returns 201 with valid request", async () => {
   });
   await order.save();
 
-  const response = await request(app)
+  await request(app)
     .post("/api/payments")
     .set("Cookie", await getAuthCookie(userId))
     .send({
@@ -93,8 +92,5 @@ it("returns 201 with valid request", async () => {
     orderId: order.id,
     stripeId: stripeCharge!.id,
   });
-
   expect(payment).not.toBeNull();
-
-  expect(response.body.id).toEqual(payment!.id);
 });
