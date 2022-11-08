@@ -1,4 +1,4 @@
-# TixMix
+# [TixMix](http://www.tixmix.store/)
 
 [![Auth tests](https://github.com/koutsilis1999/TixMix/actions/workflows/tests-auth.yml/badge.svg)](https://github.com/koutsilis1999/TixMix/actions/workflows/tests-auth.yml)
 [![Orders tests](https://github.com/koutsilis1999/TixMix/actions/workflows/tests-orders.yml/badge.svg)](https://github.com/koutsilis1999/TixMix/actions/workflows/tests-orders.yml)
