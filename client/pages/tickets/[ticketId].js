@@ -15,6 +15,7 @@ const TicketShow = ({ ticket }) => {
     <div>
       <h1>{ticket.title}</h1>
       <h4>Price: {ticket.price}</h4>
+      <h4>Description: {ticket.description}</h4>
       <button className="btn btn-primary" onClick={() => doRequest()}>
         Buy Ticket
       </button>

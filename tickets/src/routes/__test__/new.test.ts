@@ -23,7 +23,7 @@ it("should return an error when invalid title is provided", async () => {
   await request(app)
     .post("/api/tickets")
     .set("Cookie", await getAuthCookie())
-    .send({ title: "", price: 10 })
+    .send({ title: "", price: 10, description: "test" })
     .expect(400);
 
   await request(app)
@@ -37,7 +37,7 @@ it("should return an error when invalid price is provided", async () => {
   await request(app)
     .post("/api/tickets")
     .set("Cookie", await getAuthCookie())
-    .send({ title: "sometitle", price: -10 })
+    .send({ title: "sometitle", price: -10, description: "test" })
     .expect(400);
 
   await request(app)
@@ -46,23 +46,39 @@ it("should return an error when invalid price is provided", async () => {
     .send({ title: "sometitle" })
     .expect(400);
 });
+
+it("should return an error when invalid description is provided", async () => {
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", await getAuthCookie())
+    .send({ title: "test", price: 10, description: "" })
+    .expect(400);
+
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", await getAuthCookie())
+    .send({ price: 10 })
+    .expect(400);
+});
 it("creates ticket with valid inputs", async () => {
   let tickets = await Ticket.find({});
   expect(tickets.length).toEqual(0);
 
   const title = "sometitle";
   const price = 10;
+  const description = "test";
 
   await request(app)
     .post("/api/tickets")
     .set("Cookie", await getAuthCookie())
-    .send({ title, price })
+    .send({ title, price, description })
     .expect(201);
 
   tickets = await Ticket.find({});
   expect(tickets.length).toEqual(1);
   expect(tickets[0].price).toEqual(price);
   expect(tickets[0].title).toEqual(title);
+  expect(tickets[0].description).toEqual(description);
 });
 
 it("publishes an event", async () => {
@@ -71,11 +87,12 @@ it("publishes an event", async () => {
 
   const title = "sometitle";
   const price = 10;
+  const description = "test";
 
   await request(app)
     .post("/api/tickets")
     .set("Cookie", await getAuthCookie())
-    .send({ title, price })
+    .send({ title, price, description })
     .expect(201);
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
