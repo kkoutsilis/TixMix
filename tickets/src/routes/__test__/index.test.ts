@@ -6,7 +6,7 @@ const createTicket = async () => {
   return request(app)
     .post("/api/tickets")
     .set("Cookie", await getAuthCookie())
-    .send({ title: "sometitle", price: 10 });
+    .send({ title: "sometitle", price: 10, description: "test" });
 };
 
 it("can fetch a list of tickets", async () => {

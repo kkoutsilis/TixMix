@@ -21,6 +21,7 @@ router.put(
     body("price")
       .isFloat({ gt: 0 })
       .withMessage("Price must be greater than 0"),
+    body("description").not().isEmpty().withMessage("Description is required"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -37,7 +38,11 @@ router.put(
       throw new BadRequestError("Cannot edit a reserved ticket");
     }
 
-    ticket.set({ title: req.body.title, price: req.body.price });
+    ticket.set({
+      title: req.body.title,
+      price: req.body.price,
+      description: req.body.description,
+    });
     await ticket.save();
 
     new TicketUpdatedPublisher(natsWrapper.client).publish({

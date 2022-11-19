@@ -1,7 +1,12 @@
 import { Ticket } from "../ticket";
 
 it("implemets optimistic concurrenct control", async () => {
-  const ticket = Ticket.build({ title: "test", price: 20, userId: "123" });
+  const ticket = Ticket.build({
+    title: "test",
+    price: 20,
+    userId: "123",
+    description: "test",
+  });
   await ticket.save();
 
   const fitstInstance = await Ticket.findById(ticket.id);
@@ -22,7 +27,12 @@ it("implemets optimistic concurrenct control", async () => {
 });
 
 it("should invrement version number", async () => {
-  const ticket = Ticket.build({ title: "test", price: 20, userId: "123" });
+  const ticket = Ticket.build({
+    title: "test",
+    price: 20,
+    userId: "123",
+    description: "test",
+  });
 
   await ticket.save();
   expect(ticket.version).toEqual(0);

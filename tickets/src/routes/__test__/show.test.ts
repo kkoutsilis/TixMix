@@ -11,10 +11,12 @@ it("should return 404 if ticket does not exist", async () => {
 it("should return the ticket if it exists", async () => {
   const title = "sometitle";
   const price = 10;
+  const description = "test";
   const userId = "someid";
   const ticket = Ticket.build({
     title,
     price,
+    description,
     userId,
   });
   ticket.save();
