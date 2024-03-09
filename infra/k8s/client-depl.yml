@@ -15,6 +15,13 @@ spec:
       containers:
         - name: client
           image: kkoutsilis/client
+          env:
+            - name: APP_ENV
+              valueFrom:
+                secretKeyRef:
+                  name: app-env
+                  key: APP_ENV
+ 
 ---
 apiVersion: v1
 kind: Service

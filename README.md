@@ -15,6 +15,7 @@ Install the following tools in you system
 
 Create the following secrets
 ```sh
+kubectl create secret generic app-env --from-literal=APP_ENV=development
 kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<secret>
 kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<secret>
 ```
