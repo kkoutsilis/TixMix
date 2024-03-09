@@ -14,38 +14,38 @@ TixMix
    - [Skaffold](https://skaffold.dev/docs/install/)
 
 2) Create the following secrets
-```sh
-kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<secret>
-kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<secret>
-```
+   ```sh
+   kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<secret>
+   kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<secret>
+   ```
 
 You can get a stripe test api key from [here](https://dashboard.stripe.com/test/apikeys).
 
 3) Add the following to your host file
-```
-127.0.0.1 tixmix.dev
-```
+   ```
+   127.0.0.1 tixmix.dev
+   ```
 
 4) Enable ingress
-```sh
-minikube addson enable ingress
-```
+   ```sh
+   minikube addson enable ingress
+   ```
 
 4) Startup minikube cluster, this requires docker running in your system
-```sh
-minikube start
-```
+   ```sh
+   minikube start
+   ```
 
 5) Make sure that the baseURL in `clinet/api/build-client.ts` is pointing to `"http://ingress-nginx-controller.ingress-nginx.svc.cluster.local"`
 
 6) Spinup the applicaton
-```sh
-skaffold dev
-```
+   ```sh
+   skaffold dev
+   ```
 
 In case you are using windows with WSL you will need to also run the follwoing to be able to access the app through your browser
-```sh
-minikube tunnel
-```
+   ```sh
+   minikube tunnel
+   ```
 
 You should be able to access your application by typing `tixmix.dev` into your browser.
