@@ -1,4 +1,4 @@
-import { OrderUpdatedListener } from "./events/listeners/order-updated-listener";
+import { OrderMailListener } from "./events/listeners/order-mail-listener";
 import { natsWrapper } from "./nats-wrapper";
 
 const start = async () => {
@@ -25,7 +25,7 @@ const start = async () => {
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
 
-    new OrderUpdatedListener(natsWrapper.client).listen();
+    new OrderMailListener(natsWrapper.client).listen();
   } catch (err) {
     console.log(err);
   }

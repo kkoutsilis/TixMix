@@ -5,6 +5,7 @@ import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 interface OrderAttrs {
   userId: string;
+  userEmail: string;
   status: OrderStatus;
   expiresAt: Date;
   ticket: TicketDoc;
@@ -12,6 +13,7 @@ interface OrderAttrs {
 
 interface OrderDoc extends mongoose.Document {
   userId: string;
+  userEmail: string;
   status: OrderStatus;
   expiresAt: Date;
   version: number;
@@ -25,6 +27,10 @@ interface OrderModel extends mongoose.Model<OrderDoc> {
 const orderSchema = new mongoose.Schema(
   {
     userId: {
+      type: String,
+      required: true,
+    },
+    userEmail:{
       type: String,
       required: true,
     },
