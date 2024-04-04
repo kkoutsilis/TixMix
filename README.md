@@ -7,6 +7,8 @@ TixMix
 
 ## Locan Development
 
+For sending emails locally, we are using [mailhog](https://github.com/mailhog/MailHog)
+
 Install the following tools in you system
    - [Docker](https://docs.docker.com/engine/install/)
    - [kubectl](https://kubernetes.io/docs/tasks/tools/)
@@ -25,6 +27,7 @@ You can get a stripe test api key from [here](https://dashboard.stripe.com/test/
 Add the following to your host file
 ```
 127.0.0.1 tixmix.dev
+127.0.0.1 mailhog.local
 ```
 
 Enable ingress
@@ -49,4 +52,5 @@ In case you are using windows with WSL you will need to also run the follwoing t
 minikube tunnel
 ```
 
-You should be able to access your application by typing `tixmix.dev` into your browser.
+You can access the application by typing `tixmix.dev` into your browser.
+You can access mailhog by typing `tixmix.local` into your brower.
