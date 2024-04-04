@@ -1,5 +1,6 @@
 import { OrderMailListener } from "./events/listeners/order-mail-listener";
 import { natsWrapper } from "./nats-wrapper";
+import nodemailer from "nodemailer";
 
 const start = async () => {
   if (!process.env.NATS_CLIENT_ID) {
@@ -11,7 +12,13 @@ const start = async () => {
   if (!process.env.NATS_URL) {
     throw new Error("NATS_URL must be defined!");
   }
-
+  if (!process.env.MAIL_HOST) {
+    throw new Error("MAIL_HOST must be defined!");
+  }
+  if (!process.env.MAIL_PORT) {
+    throw new Error("MAIL_PORT must be defined!");
+  }
+  
   try {
     await natsWrapper.connect(
       process.env.NATS_CLUSTER_ID,

@@ -24,3 +24,7 @@ spec:
               value: http://nats-srv:4222
             - name: NATS_CLUSTER_ID
               value: tixmix
+            - name: MAIL_HOST
+              value: mailhog-srv
+            - name: MAIL_PORT
+              value: "1025"
