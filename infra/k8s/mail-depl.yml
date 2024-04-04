@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: email-depl
+  name: mail-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: email
+      app: mail
   template:
     metadata:
       labels:
-        app: email
+        app: mail
     spec:
       containers:
-        - name: email
-          image: kkoutsilis/tixmix-email-service
+        - name: mail
+          image: kkoutsilis/tixmix-mail-service
           env:
             - name: NATS_CLIENT_ID
               valueFrom:

@@ -57,8 +57,8 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: kkoutsilis/tixmix-email-service
-      context: email
+    - image: kkoutsilis/tixmix-mail-service
+      context: mail
       docker:
         dockerfile: Dockerfile
       sync:
