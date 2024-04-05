@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: mail
-          image: kkoutsilis/tixmix-mail-service
+          image: kkoutsilis/tixmix-mail
           env:
             - name: NATS_CLIENT_ID
               valueFrom:
