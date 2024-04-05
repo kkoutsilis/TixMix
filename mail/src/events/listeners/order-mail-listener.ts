@@ -1,7 +1,8 @@
 import { Listener, OrderMailEvent, Subjects } from "@ktixmix/common";
 import { Message } from "node-nats-streaming";
-import { queueGroupName } from "./queue-group-name";
 import nodemailer from "nodemailer";
+import { generateOrderEmailTemplate } from "../../templates/template";
+import { queueGroupName } from "./queue-group-name";
 
 export class OrderMailListener extends Listener<OrderMailEvent> {
   readonly subject = Subjects.OrderMail;
@@ -14,15 +15,18 @@ export class OrderMailListener extends Listener<OrderMailEvent> {
       secure: false,
     });
 
-    const info = await transporter.sendMail({
-      from: '"TixMix 👻" <automated@tixmix.dev>',
-      to: data.userEmail,
-      subject: `Order Confirmation ${data.id} ✔`,
-      text: `Thank you for you order ${data.id}`,
-      html: `<b>Thank you for you order ${data.id}</b>`,
-    });
-
-    console.log("Message sent: %s", info.messageId);
+    try {
+      const htmlBody = generateOrderEmailTemplate(data);
+      const info = await transporter.sendMail({
+        from: '"TixMix 🎫" <automated@tixmix.dev>',
+        to: data.userEmail,
+        subject: `Order Confirmation ${data.id} ✔`,
+        html: htmlBody,
+      });
+      console.log("Email sent: %s", info.messageId);
+    } catch (err) {
+      console.log("Failed to send email %s", err);
+    }
     msg.ack();
   }
 }
