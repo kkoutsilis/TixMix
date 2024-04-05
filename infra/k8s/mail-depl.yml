@@ -25,6 +25,12 @@ spec:
             - name: NATS_CLUSTER_ID
               value: tixmix
             - name: MAIL_HOST
-              value: mailhog-srv
+              valueFrom:
+                secretKeyRef:
+                  name: mail-host
+                  key: MAIL_HOST
             - name: MAIL_PORT
-              value: "1025"
+              valueFrom:
+                secretKeyRef:
+                  name: mail-port
+                  key: MAIL_PORT
