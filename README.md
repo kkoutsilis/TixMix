@@ -62,4 +62,4 @@ minikube tunnel
 ```
 
 You can access the application by typing `tixmix.dev` into your browser.
-You can access mailhog by typing `tixmix.local` into your brower.
+You can access mailhog by typing `mailhog.local` into your brower.
