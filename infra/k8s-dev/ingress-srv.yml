@@ -7,6 +7,17 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
+    - host: mailhog.local
+      http:
+        paths:
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: mailhog-srv
+                port:
+                  number: 8025
+
     - host: tixmix.dev
       http:
         paths:

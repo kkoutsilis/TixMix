@@ -8,6 +8,7 @@ import { Message } from "node-nats-streaming";
 import { queueGroupName } from "./queue-group-name";
 import { Order } from "../../models/order";
 import { OrderUpdatedPublisher } from "../publishers/order-updated-publihser";
+import { OrderMailPublisher } from "../publishers/order-mail-publisher";
 
 export class PaymentCreatedListener extends Listener<PaymentCreatedEvent> {
   readonly subject = Subjects.PaymentCreated;
@@ -32,6 +33,18 @@ export class PaymentCreatedListener extends Listener<PaymentCreatedEvent> {
       ticket: {
         id: order.ticket.id,
         price: order.ticket.price,
+      },
+    });
+
+    await new OrderMailPublisher(this.client).publish({
+      id: order.id,
+      status: order.status,
+      userId: order.userId,
+      userEmail: order.userEmail,
+      ticket: {
+        id: order.ticket.id,
+        price: order.ticket.price,
+        title: order.ticket.title,
       },
     });
 

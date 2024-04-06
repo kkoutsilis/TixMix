@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: expiration-depl
+  name: mail-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: expiration
+      app: mail
   template:
     metadata:
       labels:
-        app: expiration
+        app: mail
     spec:
       containers:
-        - name: expiration
-          image: kkoutsilis/tixmix-expiration
+        - name: mail
+          image: kkoutsilis/tixmix-mail
           env:
             - name: NATS_CLIENT_ID
               valueFrom:
@@ -24,6 +24,13 @@ spec:
               value: http://nats-srv:4222
             - name: NATS_CLUSTER_ID
               value: tixmix
-            - name: REDIS_HOST
-              value: expiration-redis-srv
-              
+            - name: MAIL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mail-host
+                  key: MAIL_HOST
+            - name: MAIL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: mail-port
+                  key: MAIL_PORT

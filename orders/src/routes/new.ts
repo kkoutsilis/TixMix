@@ -40,6 +40,7 @@ router.post(
     // save order
     const order = Order.build({
       userId: req.currentUser!.id,
+      userEmail: req.currentUser!.email,
       status: OrderStatus.Created,
       expiresAt: expiration,
       ticket,

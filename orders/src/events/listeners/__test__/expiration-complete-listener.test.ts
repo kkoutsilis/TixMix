@@ -18,6 +18,7 @@ const setup = async () => {
 
   const order = Order.build({
     userId: new mongoose.Types.ObjectId().toHexString(),
+    userEmail: "test@test.com",
     status: OrderStatus.Created,
     expiresAt: new Date(),
     ticket: ticket,

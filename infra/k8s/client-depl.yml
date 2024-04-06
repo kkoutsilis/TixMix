@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: kkoutsilis/client
+          image: kkoutsilis/tixmix-client
           env:
             - name: APP_ENV
               valueFrom:

@@ -9,7 +9,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: kkoutsilis/auth
+    - image: kkoutsilis/tixmix-auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -17,7 +17,7 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: kkoutsilis/client
+    - image: kkoutsilis/tixmix-client
       context: client
       docker:
         dockerfile: Dockerfile
@@ -25,7 +25,7 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
-    - image: kkoutsilis/tickets
+    - image: kkoutsilis/tixmix-tickets
       context: tickets
       docker:
         dockerfile: Dockerfile
@@ -33,7 +33,7 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: kkoutsilis/orders
+    - image: kkoutsilis/tixmix-orders
       context: orders
       docker:
         dockerfile: Dockerfile
@@ -41,7 +41,7 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: kkoutsilis/expiration
+    - image: kkoutsilis/tixmix-expiration
       context: expiration
       docker:
         dockerfile: Dockerfile
@@ -49,8 +49,16 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: kkoutsilis/payments
+    - image: kkoutsilis/tixmix-payments
       context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: kkoutsilis/tixmix-mail
+      context: mail
       docker:
         dockerfile: Dockerfile
       sync:
